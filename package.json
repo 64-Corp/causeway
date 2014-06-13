@@ -1,0 +1,50 @@
+{
+  "name": "causeway",
+  "description": "",
+  "version": "0.0.1",
+  "author": {
+    "name": "Iyad Assaf",
+    "email": "iyadassaflondon@gmail.com"
+  },
+  "keywords": [
+    "causeway",
+    "router",
+    "traffic",
+    "mongo",
+    "organise",
+    "bridge",
+    "async",
+    "sync",
+    "asynchronous",
+    "ruby",
+    "python",
+    "console"
+  ],
+  "directories": {
+    "lib": "./lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "dependencies": {
+    "q": "^1.0.1",
+    "eventemitter": "^0.3.3"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "mocha": "^1.20.1",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.10.0",
+    "jshint-stylish": "^0.2.0",
+    "grunt-jsdox": "^0.1.4"
+  },
+  "main": "./lib/causeway.coffee",
+  "readme": "",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": ""
+  },
+  "_id": "",
+  "_from": ""
+}

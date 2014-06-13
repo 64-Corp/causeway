@@ -1,0 +1,57 @@
+/**
+ * `grunt watch`     -     watch for changes in jade and SASS
+ * `grunt test`      -     run tests
+ * `grunt lint`      -     lint front and backend
+ * `grunt docs`      -     create docs
+ * `grunt clean`     -     minify code & resize images for production
+ * `grunt validate`  -     check everything is how it should be before making a pull request a main branch
+ */
+
+module.exports = function(grunt) {
+
+    'use strict';
+
+    grunt.initConfig({
+        jshint: {
+            options: {
+                node : true,        // browser variables
+                curly: true,        // disallow functions without curly braces
+                eqeqeq: true,       // === and  !== instead of == and !=
+                strict: true,       // have to enable strict mode
+                undef: true,        // disallow globally defined variables
+                noarg: true,        // prevents depreciated javascript functions
+                loopfunc: true,     // disallow functions inside loops
+                immed: true,        // disallow immediate functions, they need ()
+                indent: 4,          // force tab indentation to be set to 4
+                quotmark: 'single', // force use of single quotation marks
+                camelcase: true,    // forces camel case - note this needs to be ignored when using json apis
+                unused: true,       // disallows unused variables
+                eqnull: true,       // allow variable comparison with null or undefined
+                laxcomma: true,     // allow commas before variables or keys
+                globals: {
+
+                },
+                reporter: require('jshint-stylish')
+            },
+            uses_defaults: ['lib/**/**/*.js']
+        },
+        jsdox: {
+            generate: {
+                options: {
+                    contentsEnabled: true,
+                    contentsTitle: 'Casueway',
+                    contentsFile: 'readme.md'
+                },
+                src: ['lib/**/**/*.js'],
+                dest: 'docs'
+            }
+        }
+    });
+
+    // npm modules
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-jsdox');
+
+    // tasks
+    grunt.registerTask('lint', ['jshint']);    
+};
