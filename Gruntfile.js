@@ -1,9 +1,7 @@
 /**
- * `grunt watch`     -     watch for changes in jade and SASS
  * `grunt test`      -     run tests
  * `grunt lint`      -     lint front and backend
  * `grunt docs`      -     create docs
- * `grunt clean`     -     minify code & resize images for production
  * `grunt validate`  -     check everything is how it should be before making a pull request a main branch
  */
 
@@ -14,7 +12,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         jshint: {
             options: {
-                node : true,        // browser variables
+                node : true,        // node variables
                 curly: true,        // disallow functions without curly braces
                 eqeqeq: true,       // === and  !== instead of == and !=
                 strict: true,       // have to enable strict mode
@@ -29,7 +27,6 @@ module.exports = function(grunt) {
                 eqnull: true,       // allow variable comparison with null or undefined
                 laxcomma: true,     // allow commas before variables or keys
                 globals: {
-
                 },
                 reporter: require('jshint-stylish')
             },
@@ -39,11 +36,21 @@ module.exports = function(grunt) {
             generate: {
                 options: {
                     contentsEnabled: true,
-                    contentsTitle: 'Casueway',
+                    contentsTitle: 'Causeway',
                     contentsFile: 'readme.md'
                 },
-                src: ['lib/**/**/*.js'],
+                src: ['lib/**/**/*.js', 'test/**/**/*.js'],
                 dest: 'docs'
+            }
+        },
+        mochaTest: {
+            lib: {
+                options: {
+                    reporter: 'spec',
+                    growl: true,
+                    colors: true
+                },
+                src: ['test/**/**/**/*.js']
             }
         }
     });
@@ -51,7 +58,11 @@ module.exports = function(grunt) {
     // npm modules
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-jsdox');
+    grunt.loadNpmTasks('grunt-mocha-test');
 
     // tasks
-    grunt.registerTask('lint', ['jshint']);    
+    grunt.registerTask('lint', ['jshint']);
+    grunt.registerTask('test', ['mochaTest']);
+    grunt.registerTask('docs', ['jsdox']);
+    grunt.registerTask('default', ['mochaTest', 'lint', 'docs']);
 };

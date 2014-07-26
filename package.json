@@ -37,7 +37,10 @@
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.10.0",
     "jshint-stylish": "^0.2.0",
-    "grunt-jsdox": "^0.1.4"
+    "grunt-jsdox": "^0.1.4",
+    "express": "^4.4.3",
+    "grunt-mocha-test": "^0.11.0",
+    "q": "^1.0.1"
   },
   "main": "./lib/causeway.coffee",
   "readme": "",

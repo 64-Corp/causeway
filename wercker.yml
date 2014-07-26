@@ -1,0 +1,17 @@
+box: wercker/nodejs
+# Build definition
+build:
+  # The steps that will be executed on build
+  steps:
+
+    # Install node module packages
+    - npm-install
+
+    # Build the project, and run the tests
+    - npm-test
+
+    # Check code quality
+    - script:
+        name: Check code quality
+        code: |
+          sudo ./node_modules/.bin/grunt lint
