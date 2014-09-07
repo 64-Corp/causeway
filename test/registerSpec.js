@@ -1,6 +1,4 @@
-// var RedisHandler = require('./resources/redisHandler');
-// var redis = new RedisHandler(2232);
-// redis.kill();
+'use strict';
 
 describe('Register',function () {
 

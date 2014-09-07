@@ -4,8 +4,8 @@ var RedisHandler, self;
 
 module.exports = RedisHandler = function (port) {
     self = this;
-    self.spawn = require('child_process').spawn('redis-server', ['--port', port || '6379']);
-    
+    self.spawn = require('child_process').spawn('/usr/local/bin/redis-server', ['--port', port || '6379']);
+
     self.spawn.stdout.on('data', function (data) {
         console.log('stdout: ' + data);
     });
