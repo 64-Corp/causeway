@@ -1,12 +1,11 @@
-(function () {
-    'use strict';
 
-    var causeway;
-    beforeEach(function () {
-        causeway = require('../index.js')({});
-    });
+'use strict';
 
-    describe('Causeway', function (){
-        
-    });
-})();
+var causeway;
+beforeEach(function () {
+    causeway = require('../index.js')({});
+});
+
+describe('Causeway', function (){
+
+});
