@@ -8,13 +8,7 @@ build:
     - script:
         name: Install redis
         code: |
-          sudo wget http://download.redis.io/redis-stable.tar.gz && sudo tar xvzf redis-stable.tar.gz && cd redis-stable && sudo make
-
-    # Install redis
-    - script:
-        name: Find install path
-        code: |
-          echo {$PATH}
+          sudo wget http://download.redis.io/redis-stable.tar.gz && sudo tar xvzf redis-stable.tar.gz && cd redis-stable && sudo make && sudo cp redis-server redis-cli redis-benchmark /usr/local/bin/
 
     # Install node module packages
     - npm-install
