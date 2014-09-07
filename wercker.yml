@@ -14,7 +14,7 @@ build:
     - script:
         name: Find install path
         code: |
-          cd /usr/local && cd bin && ls
+          echo {$PATH}
 
     # Install node module packages
     - npm-install
