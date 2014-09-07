@@ -4,11 +4,15 @@ build:
   # The steps that will be executed on build
   steps:
 
-    # Install redis
+    # Download & install redis
     - script:
-        name: Install redis
+        name: Download & install redis
         code: |
-          sudo wget http://download.redis.io/redis-stable.tar.gz && sudo tar xvzf redis-stable.tar.gz && cd redis-stable && sudo make && sudo cp redis-server redis-cli redis-benchmark /usr/local/bin/
+          curl -O http://redis.googlecode.com/files/redis-2.0.0-rc1.tar.gz && \
+          tar -xzvf redis-2.0.0-rc1.tar.gz && \
+          cd redis-2.0.0-rc1 && \
+          sudo make && \
+          sudo cp redis-server redis-cli redis-benchmark /usr/local/bin/
 
     # Install node module packages
     - npm-install
