@@ -14,7 +14,7 @@ build:
     - script:
         name: Find install path
         code: |
-          cd /usr/local/bin && sudo apt-get install tree && tree
+          cd /usr/local && cd bin && ls
 
     # Install node module packages
     - npm-install
