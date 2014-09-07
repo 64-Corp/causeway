@@ -12,7 +12,7 @@ build:
           tar -xzvf redis-2.0.0-rc1.tar.gz && \
           cd redis-2.0.0-rc1 && \
           sudo make && \
-          ls \
+          ls && \
           sudo cp redis-server redis-cli redis-benchmark /usr/local/bin/
 
     # Install node module packages
