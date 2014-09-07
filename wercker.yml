@@ -4,6 +4,12 @@ build:
   # The steps that will be executed on build
   steps:
 
+    # Install redis
+    - script:
+        name: Install redis
+        code: |
+          sudo wget http://download.redis.io/redis-stable.tar.gz && tar xvzf redis-stable.tar.gz && cd redis-stable && make
+
     # Install node module packages
     - npm-install
 

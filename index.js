@@ -1,4 +1,2 @@
-module.exports = (function () {
-    'use strict';
-    return require('./lib/causeway.js');
-})();
+'use strict';
+module.exports = require('./lib/causeway.js');

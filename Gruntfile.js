@@ -50,7 +50,7 @@ module.exports = function(grunt) {
                     growl: true,
                     colors: true
                 },
-                src: ['test/**/**/**/*.js']
+                src: ['test/common.js', 'test/**/**/**/*Spec.js']
             }
         }
     });
