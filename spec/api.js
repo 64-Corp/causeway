@@ -10,6 +10,6 @@ var causeway = (new (require('../index'))())
     bridge = causeway.using('default');
 
 
-bridge.listen().then(function (channel, resp) {
+bridge.listen('load_*').then(function (channel, resp) {
     console.log('recieved message on channel ' + channel + ' :' + JSON.stringify(resp, null, 4));
 });
