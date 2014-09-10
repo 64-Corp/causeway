@@ -42,6 +42,14 @@ var redis = require('redis');
                 key: clientKey
             });
 
+            sub.on('disconnect', function () {
+                sub.quit();
+            });
+
+            pub.on('disconnect', function () {
+                sub.quit();
+            });
+
         });
     });
 };
@@ -56,6 +64,7 @@ var runClient = function () {
         pub = redis.createClient(),
         requestToken = require('crypto').createHash('sha1').update((new Date()).valueOf().toString() + Math.random().toString()).digest('hex');
 
+    // client action #1: requestToken
     pub.publish('causeway:handshake', requestToken);
 
     sub.psubscribe(requestToken + '_*');
