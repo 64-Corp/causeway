@@ -33,7 +33,8 @@
   "dependencies": {
     "q": "^1.0.1",
     "eventemitter": "^0.3.3",
-    "redis": "^0.12.1"
+    "redis": "^0.12.1",
+    "chalk": "^0.5.1"
   },
   "devDependencies": {
     "chai": "^1.9.1",
