@@ -7,6 +7,7 @@
     "email": "iyadassaflondon@gmail.com"
   },
   "scripts": {
+    "bench": "redis-server ./test/resources/redis.conf | node ./bench/async.js && node ./bench/blocking.js",
     "test": "redis-server ./test/resources/redis.conf | ./node_modules/.bin/grunt test"
   },
   "keywords": [
@@ -47,7 +48,8 @@
     "grunt-mocha-test": "^0.11.0",
     "q": "^1.0.1",
     "grunt-cli": "^0.1.13",
-    "ps-tree": "0.0.3"
+    "ps-tree": "0.0.3",
+    "async": "^0.9.0"
   },
   "main": "./lib/causeway.coffee",
   "readme": "",
