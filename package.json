@@ -7,7 +7,7 @@
     "email": "iyadassaflondon@gmail.com"
   },
   "scripts": {
-    "bench": "redis-server ./test/resources/redis.conf | node ./bench/async.js && node ./bench/blocking.js",
+    "bench": "redis-server ./test/resources/redis.conf | node ./bench/async.js && node ./bench/blocking.js ",
     "test": "redis-server ./test/resources/redis.conf | ./node_modules/.bin/grunt test"
   },
   "keywords": [
