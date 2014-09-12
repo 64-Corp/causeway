@@ -12,44 +12,32 @@ var redis = require('redis');
  var runAPI = function () {
 
     var handshake = redis.createClient(),
+        sub = redis.createClient(),
+        pub = redis.createClient(),
         clients = [];
 
     handshake.subscribe('causeway:handshake');
     handshake.on('subscribe', function () {
+
+        sub.on('subscribe', function () {
+            sub.on('message', function (channel, message) {
+
+                console.log('API: got message: '  + message);
+                pub.publish(clientKey + '_resp', 'result');
+            });
+        });
+
+
         handshake.on('message', function (channel, clientKey) {
+
+            clients.push(clientKey);
 
             console.log('API: Handshake with key ' + clientKey);
 
-            var sub = redis.createClient(),
-                pub = redis.createClient();
+            sub.subscribe(clientKey + '_req');
 
             // tell the client that it is connected
             pub.publish(clientKey + '_handshake', 'OK');
-
-            sub.subscribe(clientKey + '_req');
-            sub.on('subscribe', function () {
-                sub.on('message', function (channel, message) {
-
-                    console.log('API: got message: '  + message);
-                    pub.publish(clientKey + '_resp', 'result');
-                });
-            });
-
-            // push to clients array for future use
-            clients.push({
-                sub: sub,
-                pub: pub,
-                key: clientKey
-            });
-
-            sub.on('disconnect', function () {
-                sub.quit();
-            });
-
-            pub.on('disconnect', function () {
-                sub.quit();
-            });
-
         });
     });
 };

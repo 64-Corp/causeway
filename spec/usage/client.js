@@ -16,5 +16,4 @@ bridge.on('handshake', function (key) {
         console.log('load_user returned: ' + JSON.stringify(user, null, 4));
     });
 
-
 });
