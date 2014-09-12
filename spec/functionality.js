@@ -4,54 +4,39 @@
  */
 
 'use strict';
-var redis = require('redis');
+var redis = require('redis'),
+    port = 1672,
+    host = '0.0.0.0';
 
 /**
  * Server
  */
- var runAPI = function () {
+var runAPI = function () {
 
-    var handshake = redis.createClient(),
-        clients = [];
+    var sub = redis.createClient(port, host),
+        pub = redis.createClient(port, host);
 
-    handshake.subscribe('causeway:handshake');
-    handshake.on('subscribe', function () {
-        handshake.on('message', function (channel, clientKey) {
+    // format:
+    // causeway:clientKey:handshake/message/destroy:req/resp
+    sub.psubscribe('causeway:*');
+    sub.on('psubscribe', function () {
+        sub.on('pmessage', function (pattern, channel, message) {
 
-            console.log('API: Handshake with key ' + clientKey);
+            var split = channel.split(':'),
+                key = split[1],
+                method = split[2],
+                type = split[3];
 
-            var sub = redis.createClient(),
-                pub = redis.createClient();
+            if(method === 'handshake' && type === 'req') {
 
-            // tell the client that it is connected
-            pub.publish(clientKey + '_handshake', 'OK');
+                console.log('API: Auth with key: ' + message);
 
-            sub.subscribe(clientKey + '_req');
-            sub.on('subscribe', function () {
-                sub.on('message', function (channel, message) {
-
-                    console.log('API: got message: '  + message);
-                    pub.publish(clientKey + '_resp', 'result');
-                });
-            });
-
-            // push to clients array for future use
-            clients.push({
-                sub: sub,
-                pub: pub,
-                key: clientKey
-            });
-
-            sub.on('disconnect', function () {
-                sub.quit();
-            });
-
-            pub.on('disconnect', function () {
-                sub.quit();
-            });
-
+                pub.publish('causeway:' + message + ':handshake:resp', 'OK');
+            } else if ((method === 'message') && type === 'req') {
+                pub.publish('causeway:' + key + ':message:resp', 'hello!!!');
+            }
         });
-    });
+   });
 };
 
 
@@ -60,23 +45,28 @@ var redis = require('redis');
  */
 var runClient = function () {
 
-    var sub = redis.createClient(),
-        pub = redis.createClient(),
+    var sub = redis.createClient(port, host),
+        pub = redis.createClient(port, host),
         requestToken = require('crypto').createHash('sha1').update((new Date()).valueOf().toString() + Math.random().toString()).digest('hex');
 
     // client action #1: requestToken
-    pub.publish('causeway:handshake', requestToken);
+    pub.publish('causeway:' + requestToken + ':handshake:req', requestToken);
 
-    sub.psubscribe(requestToken + '_*');
+    sub.psubscribe('causeway:' + requestToken + '*');
     sub.on('psubscribe', function () {
-        sub.on('pmessage', function (pattern, channel, resp) {
+        sub.on('pmessage', function (pattern, channel, message) {
 
-            if(channel === requestToken + '_handshake') {
-                console.log('Client: handshake response: ' + resp);
+            var split = channel.split(':'),
+                key = split[1],
+                method = split[2],
+                type = split[3];
 
-                pub.publish(requestToken + '_req', 'hello!');
-            } else {
-                console.log('Client: got response: ' + resp);
+            if(method === 'handshake' && type === 'resp') {
+                console.log('Client: handshake response: ' + message);
+                pub.publish('causeway:' + key + ':message:req', 'Hello?');
+
+            } else if (method === 'message' && type === 'resp'){
+                console.log('Client: got response: ' + message);
             }
         });
     });

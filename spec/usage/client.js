@@ -16,5 +16,7 @@ bridge.on('handshake', function (key) {
         console.log('load_user returned: ' + JSON.stringify(user, null, 4));
     });
 
-
+    bridge.request('load_user', 'ulpian').then(function (user) {
+        console.log('load_user returned: ' + JSON.stringify(user, null, 4));
+    });
 });
