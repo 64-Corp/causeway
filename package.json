@@ -7,7 +7,7 @@
     "email": "iyadassaflondon@gmail.com"
   },
   "scripts": {
-    "test": "./node_modules/.bin/grunt test"
+    "test": "redis-server ./test/resources/redis.conf | ./node_modules/.bin/grunt test"
   },
   "keywords": [
     "causeway",

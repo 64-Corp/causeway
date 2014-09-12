@@ -1,25 +1,22 @@
 'use strict';
 
-describe('Register',function () {
+var Causeway = require(process.cwd() + '/index.js'),
+    causeway = new Causeway();
 
-    var Causeway = require(process.cwd() + '/index.js'),
-        RedisHandler = require('./resources/redisHandler'),
-        causeway,
-        redis;
+describe('Transport',function () {
 
-    before(function () {
-        redis = new RedisHandler(1235);
-    });
+    it('should use send simple job between two clients and back', function (completed) {
 
-    afterEach(function () {
-        redis.kill();
-    });
+        // api
+        causeway.listen('default')
+        .when('load', function (job, args, done) {
+            done('some response');
+        });
 
-    beforeEach(function () {
-        causeway = new Causeway();
-    });
-
-    it('should use the default redis host and port if no options are passed to register', function () {
-        // causeway.register();
+        // client
+        causeway.using('default')
+        .request('load', 'some args').then(function () {
+            completed();
+        });
     });
 });
